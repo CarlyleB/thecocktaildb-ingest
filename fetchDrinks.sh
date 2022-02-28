@@ -1,9 +1,24 @@
 #!/bin/bash
 
+display_usage() {
+	echo -e "\nUsage: $0 <api_key>"
+}
+
+if [[ ( $# == "--help") ||  $# == "-h" ]]
+then
+	display_usage
+	exit 0
+fi
+
+if [ $# -eq 0 ]
+then
+	echo "No API key provided. Response will be limited to the data available to for test API key (1)."
+fi
+
 apiKey="${1:-1}"
 
-if [ ! -z $1 ] 
-then 
+if [ $apiKey -eq "1" ]
+then
     apiVersion="v1"
 else
     apiVersion="v2"
@@ -53,4 +68,4 @@ fetchAllDrinks () {
 	echo "${transformed}"
 }
 
-fetchAllDrinks
+fetchAllDrinks > drinks.csv
