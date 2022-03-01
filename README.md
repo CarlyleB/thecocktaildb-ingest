@@ -1,18 +1,28 @@
 # thecocktaildb-ingest
 
 ## Usage
-Get all available drinks from thecocktaildb, transform the response to a more friendly format, and output to drinks.csv
+Get all available...
+* drinks
+* ingredients
+* glasses
+* categories
+...from thecocktaildb, transform the data to a more friendly format, and output to `<type_directory>/data.csv`.
+
 If an api key isn't provided, the free testing api key "1" will be used and the response will be limited.
 
 ```
-./fetchDrinks <_api_key>
+./generate-csvs <api_key>
 ```
 
-The resulting `drinks.csv` file can then be used to populate a datastore.
+The resulting `data.csv` files can then be used to populate a datastore.
 
-Specific postgresql support for creating and populating a table called `drinks` is provided in `drinks.sql`.
-Invoke after `drinks.csv` has been created:
+Specific postgresql support for creating and populating tables located in `<type_directory>/table.sql`.
+
+Invoke after `./generate-csvs` has completed.
+
+For example:
 
 ```
-psql -h <host> -U <user> -d <database> -f drinks.sql
+cd drinks
+psql -h <host> -U <user> -d <database> -f table.sql
 ```
