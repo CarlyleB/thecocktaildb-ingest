@@ -68,4 +68,5 @@ fetchAllDrinks () {
 	echo "${transformed}"
 }
 
-fetchAllDrinks > drinks.csv
+dir="$(dirname "$(which "$0")")"
+fetchAllDrinks > ${dir}/drinks.csv
