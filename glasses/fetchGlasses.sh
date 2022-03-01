@@ -1,15 +1,5 @@
 #!/bin/bash
 
-display_usage() {
-	echo -e "\nUsage: $0 <api_key>"
-}
-
-if [[ ( $# == "--help") ||  $# == "-h" ]]
-then
-	display_usage
-	exit 0
-fi
-
 if [ $# -eq 0 ]
 then
 	echo "No API key provided. Response will be limited to the data available to for test API key (1)."
@@ -26,18 +16,15 @@ fi
 
 baseUrl="https://www.thecocktaildb.com/api/json/${apiVersion}/${apiKey}"
 
-fetchAllIngredients () {
-	url="$baseUrl/list.php?i=list"
+fetchAllGlasses () {
+	url="$baseUrl/list.php?g=list"
 
 	content=$(curl -s $url)
 	
-	transformed=$( jq -r '.drinks[]?
-		| [.strIngredient1, "https://www.thecocktaildb.com/images/ingredients/" + .strIngredient1 + ".png"]
-		| @csv' <<< "${content}"
-	)
+	transformed=$( jq -r '.drinks[]? | [.strGlass] | @csv' <<< "${content}")
 
 	echo "${transformed}"
 }
 
 dir="$(dirname "$(which "$0")")"
-fetchAllIngredients > ${dir}/ingredients.csv
+fetchAllGlasses > ${dir}/glasses.csv

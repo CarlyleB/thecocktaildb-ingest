@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS ingredients (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255)
+    name VARCHAR(255),
+    thumbnailUrl VARCHAR(500)
 );
 
 \copy ingredients FROM 'ingredients.csv' WITH (format csv, header false);
