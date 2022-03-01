@@ -1,15 +1,5 @@
 #!/bin/bash
 
-display_usage() {
-	echo -e "\nUsage: $0 <api_key>"
-}
-
-if [[ ( $# == "--help") ||  $# == "-h" ]]
-then
-	display_usage
-	exit 0
-fi
-
 if [ $# -eq 0 ]
 then
 	echo "No API key provided. Response will be limited to the data available to for test API key (1)."
@@ -24,9 +14,12 @@ else
     apiVersion="v2"
 fi
 
+dir="$(dirname "$(which "$0")")"
+
 baseUrl="https://www.thecocktaildb.com/api/json/${apiVersion}/${apiKey}"
 
-fetchAllDrinks () {
+### Drinks ###
+fetchDrinks () {
 	url="$baseUrl/search.php?f="
 
 	urls=""
@@ -65,8 +58,47 @@ fetchAllDrinks () {
 		} | flatten | @csv' <<< "${content}"
 	)
 
-	echo "${transformed}"
+	echo "${transformed}" > ${dir}/drinks/data.csv
+
 }
 
-dir="$(dirname "$(which "$0")")"
-fetchAllDrinks > ${dir}/drinks.csv
+### Ingredients ###
+fetchIngredients () {
+	url="$baseUrl/list.php?i=list"
+
+	content=$(curl -s $url)
+	
+	transformed=$( jq -r '.drinks[]?
+		| [.strIngredient1, "https://www.thecocktaildb.com/images/ingredients/" + .strIngredient1 + ".png"]
+		| @csv' <<< "${content}"
+	)
+
+	echo "${transformed}" > ${dir}/ingredients/data.csv
+}
+
+### Categories ###
+fetchCategories () {
+    url="$baseUrl/list.php?c=list"
+
+	content=$(curl -s $url)
+	
+	transformed=$( jq -r '.drinks[]? | [.strCategory] | @csv' <<< "${content}")
+
+	echo "${transformed}" > ${dir}/categories/data.csv
+}
+
+### Glasses ###
+fetchGlasses () {
+    url="$baseUrl/list.php?g=list"
+
+	content=$(curl -s $url)
+	
+	transformed=$( jq -r '.drinks[]? | [.strGlass] | @csv' <<< "${content}")
+
+	echo "${transformed}" > ${dir}/glasses/data.csv
+}
+
+fetchDrinks
+fetchCategories
+fetchGlasses
+fetchIngredients

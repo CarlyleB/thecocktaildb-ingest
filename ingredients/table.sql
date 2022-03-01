@@ -3,4 +3,4 @@ CREATE TABLE IF NOT EXISTS ingredients (
     thumbnailUrl VARCHAR(500)
 );
 
-\copy ingredients FROM 'ingredients.csv' WITH (format csv, header false);
+\copy ingredients FROM 'data.csv' WITH (format csv, header false);
