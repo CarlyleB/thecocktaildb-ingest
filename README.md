@@ -1,5 +1,9 @@
 # thecocktaildb-ingest
 
+Gets data from [TheCocktailDB](https://thecocktaildb.com/), puts it in a (subjectively) friendlier format, and dumps it into CSVs.
+
+The goal is to use TheCocktailDB data without having to rely on its limited API.
+
 ## Usage
 Get all available...
 * drinks
