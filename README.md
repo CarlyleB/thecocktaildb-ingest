@@ -5,12 +5,13 @@ Gets data from [TheCocktailDB](https://thecocktaildb.com/), puts it in a (subjec
 The goal is to use TheCocktailDB data without having to rely on its limited API.
 
 ## Usage
-Get all available...
+Get all available
 * drinks
 * ingredients
 * glasses
 * categories
-...from thecocktaildb, transform the data to a more friendly format, and output to `<type_directory>/data.csv`.
+
+from thecocktaildb, transform the data to a more friendly format, and output to `<type_directory>/data.csv`.
 
 If an api key isn't provided, the free testing api key "1" will be used and the response will be limited.
 
