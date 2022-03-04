@@ -6,7 +6,7 @@ Gets available
 * glasses
 * categories
 
-from [TheCocktailDB](https://thecocktaildb.com/), puts it in a (subjectively) friendlier format, and dumps it into CSVs.
+from [TheCocktailDB](https://thecocktaildb.com/), transforms the data into a (subjectively) friendlier format, and dumps it all into CSVs.
 
 **The goal is to use TheCocktailDB data without having to rely on its limited API.**
 
@@ -14,7 +14,7 @@ from [TheCocktailDB](https://thecocktaildb.com/), puts it in a (subjectively) fr
 
 ### Generating CSVs
 ```
-# If an api key isn't provided, the free testing api key "1" will be used, so the data returned by TheCocktailDB will be limited.
+# If an api key isn't provided, the free testing api key "1" will be used, so the data returned by TheCocktailDB will be limited. API keys are available for TheCocktailDB patreon supporters.
 
 ./generate-csvs <api_key>
 ```
