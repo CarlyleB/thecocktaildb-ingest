@@ -12,10 +12,10 @@ from [TheCocktailDB](https://thecocktaildb.com/), transforms the data into a (su
 
 ## Usage
 
+If an api key isn't provided, the free testing api key "1" will be used, so the data returned by TheCocktailDB will be limited. API keys are available for TheCocktailDB patreon supporters.
+
 ### Generating CSVs
 ```
-# If an api key isn't provided, the free testing api key "1" will be used, so the data returned by TheCocktailDB will be limited. API keys are available for TheCocktailDB patreon supporters.
-
 ./generate-csvs.sh <api_key>
 ```
 
