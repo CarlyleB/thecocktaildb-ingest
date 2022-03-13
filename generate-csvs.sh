@@ -2,7 +2,7 @@
 
 if [ $# -eq 0 ]
 then
-	echo "No API key provided. Response will be limited to the data available to for test API key (1)."
+	echo -e "No API key provided. Response will be limited to the data available to for test API key 1.\n"
 fi
 
 apiKey="${1:-1}"
@@ -125,3 +125,5 @@ fetchDrinks
 fetchIngredients
 fetchCategories
 fetchGlasses
+
+echo "Have a local PostgreSQL instance? Populate tables with ./generate-psql-tables.sh"

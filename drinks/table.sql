@@ -16,4 +16,6 @@ CREATE TABLE IF NOT EXISTS drinks (
     recipe VARCHAR
 );
 
+TRUNCATE TABLE drinks;
+
 \copy drinks FROM 'data.csv' WITH (format csv, header false);
