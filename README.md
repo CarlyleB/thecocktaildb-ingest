@@ -1,6 +1,6 @@
 # thecocktaildb-ingest
 
-Gets available
+Fetches available
 * drinks
 * ingredients
 * glasses
@@ -16,19 +16,16 @@ from [TheCocktailDB](https://thecocktaildb.com/), transforms the data into a (su
 ```
 # If an api key isn't provided, the free testing api key "1" will be used, so the data returned by TheCocktailDB will be limited. API keys are available for TheCocktailDB patreon supporters.
 
-./generate-csvs <api_key>
+./generate-csvs.sh <api_key>
 ```
 
 This will add a `data.csv` file under each relevant directory (ex - `drinks/data.csv`, `ingredients/data.csv`, etc.). These CSVs can then be used to populate a datastore.
 
 ### Populating PostgreSQL tables
-Support for creating and populating PostgreSQL tables is located in `<type_directory>/table.sql`.
+Once `generate-csvs` completes, those csvs can be used to populate PostgreSQL tables.
 
-Invoke after `./generate-csvs` has completed.
+If a local psql instance exists, run `./generate-psql-tables.sh` to create a database called `thecocktaildb` and populate tables.
 
-For example:
+Otherwise, the individual tables may be manually created. For example, to create the `drinks` table:
 
-```
-cd drinks
-psql -h <host> -U <user> -d <database> -f table.sql
-```
+`cd drinks && psql -h <host> -U <user> -d <database> -f table.sql`
