@@ -20,6 +20,8 @@ baseUrl="https://www.thecocktaildb.com/api/json/${apiVersion}/${apiKey}"
 
 ### Drinks ###
 fetchDrinks () {
+	echo "Fetching drinks..."
+
 	url="$baseUrl/search.php?f="
 
 	urls=""
@@ -58,12 +60,17 @@ fetchDrinks () {
 		} | flatten | @csv' <<< "${content}"
 	)
 
-	echo "${transformed}" > ${dir}/drinks/data.csv
+	drinksCsvPath="${dir}/drinks/data.csv"
+	echo "${transformed}" > ${drinksCsvPath}	# add drinks to csv
 
+	drinkCount=$(wc -l ${drinksCsvPath} | cut -d " " -f1)
+	echo -e "$drinkCount drinks added to $drinksCsvPath\n"	# print drink count to console
 }
 
 ### Ingredients ###
 fetchIngredients () {
+	echo "Fetching ingredients..."
+
 	url="$baseUrl/list.php?i=list"
 
 	content=$(curl -s $url)
@@ -73,32 +80,48 @@ fetchIngredients () {
 		| @csv' <<< "${content}"
 	)
 
-	echo "${transformed}" > ${dir}/ingredients/data.csv
+	ingredientsCsvPath="${dir}/ingredients/data.csv"
+	echo "${transformed}" > ${ingredientsCsvPath}	# add ingredients to csv
+
+	ingredientCount=$(wc -l $ingredientsCsvPath | cut -d " " -f1)
+	echo -e "$ingredientCount ingredients added to $ingredientsCsvPath\n"	# print ingredient count to console
 }
 
 ### Categories ###
 fetchCategories () {
+	echo "Fetching categories..."
+
     url="$baseUrl/list.php?c=list"
 
 	content=$(curl -s $url)
 	
 	transformed=$( jq -r '.drinks[]? | [.strCategory] | @csv' <<< "${content}")
 
-	echo "${transformed}" > ${dir}/categories/data.csv
+	categoriesCsvPath="${dir}/categories/data.csv"
+	echo "${transformed}" > ${categoriesCsvPath}	# add categories to csv
+
+	categoryCount=$(wc -l $categoriesCsvPath | cut -d " " -f1)
+	echo -e "$categoryCount categories added to $categoriesCsvPath\n"	# print category count to console
 }
 
 ### Glasses ###
 fetchGlasses () {
+	echo "Fetching glasses..."
+
     url="$baseUrl/list.php?g=list"
 
 	content=$(curl -s $url)
 	
 	transformed=$( jq -r '.drinks[]? | [.strGlass] | @csv' <<< "${content}")
 
-	echo "${transformed}" > ${dir}/glasses/data.csv
+	glassesCsvPath="${dir}/glasses/data.csv"
+	echo "${transformed}" > ${glassesCsvPath}	# add glasses to csv
+
+	glassCount=$(wc -l $glassesCsvPath | cut -d " " -f1)
+	echo -e "$glassCount glasses added to $glassesCsvPath\n"	# print glass count to console
 }
 
 fetchDrinks
+fetchIngredients
 fetchCategories
 fetchGlasses
-fetchIngredients
