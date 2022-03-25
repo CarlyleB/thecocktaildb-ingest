@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if ! command -v jq &> /dev/null
+then
+    echo -e "Error: jq must be installed."
+    exit
+fi
+
 if [ $# -eq 0 ]
 then
 	echo -e "No API key provided. Response will be limited to the data available to for test API key 1.\n"

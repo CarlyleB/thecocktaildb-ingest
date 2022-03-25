@@ -7,12 +7,10 @@ sqlFile="table.sql"
 
 createDB () {
     echo "Creating $dbName..."
-    $( psql -c "CREATE DATABASE $dbName" &> /dev/null )
-    if [ "$( psql -tAc "SELECT 1 FROM pg_database WHERE datname='$dbName'" )" = '1' ]
+    $( psql -c "CREATE DATABASE $dbName" )
+    if [ $? = 1 ]
     then
-        echo "...$dbName created."
-    else
-        echo "Error - $dbName could not be created."
+        exit
     fi
     echo -e "\n"
 }
